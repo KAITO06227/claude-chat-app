@@ -10,18 +10,26 @@ ClaudeとのシンプルなチャットコミュニケーションができるWe
 - 日本語対応
 - Docker対応プロキシサーバー
 - 実際のClaude API統合
+- 複数セッション管理
+- セッションの永続化（localStorage）
+- セッション作成・削除・名前変更
 
 ## ファイル構成
 
 ```
-├── index.html           # メインHTMLファイル
-├── style.css            # スタイルシート
-├── script.js            # JavaScript機能
+├── home.html            # ホームページ（セッション一覧）
+├── home.css             # ホームページスタイル
+├── home.js              # ホームページ機能
+├── chat.html            # チャットページ
+├── chat.js              # チャット機能
+├── style.css            # チャットページスタイル
 ├── server.js            # Express.jsプロキシサーバー
 ├── package.json         # Node.js依存関係
 ├── Dockerfile           # Dockerイメージ設定
 ├── docker-compose.yml   # Docker Compose設定
 ├── .env.example         # 環境変数テンプレート
+├── index.html           # 旧チャットページ（互換性のため）
+├── script.js            # 旧チャット機能（互換性のため）
 └── README.md            # このファイル
 ```
 
@@ -65,9 +73,17 @@ npm run dev
 
 ## 使用方法
 
-1. ブラウザで `http://localhost:3000` を開く
-2. メッセージを入力してEnterキーまたは送信ボタンをクリック
-3. Claudeからの応答を待つ
+1. ブラウザで `http://localhost:3000` を開く（ホームページが表示されます）
+2. 「新しいセッション」ボタンをクリックしてセッションを作成
+3. セッション名と説明を入力して「作成」をクリック
+4. チャットページでClaude と会話
+5. 「ホーム」ボタンでセッション一覧に戻る
+
+### セッション管理
+- **新規作成**: ホームページで「新しいセッション」をクリック
+- **会話開始**: セッションカードをクリック
+- **名前変更**: セッションカードの「⋮」メニューから「名前を変更」
+- **削除**: セッションカードの「⋮」メニューから「削除」
 
 ## Docker コマンド
 
@@ -90,7 +106,8 @@ docker-compose build --no-cache
 
 ## API エンドポイント
 
-- `GET /` - チャットアプリケーション
+- `GET /` - ホームページ（セッション一覧）
+- `GET /chat` - チャットページ
 - `POST /api/claude` - Claude APIプロキシ
 - `GET /health` - ヘルスチェック
 

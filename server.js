@@ -75,7 +75,11 @@ app.get('/health', (req, res) => {
 
 // 静的ファイルの提供
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'home.html'));
+});
+
+app.get('/chat', (req, res) => {
+  res.sendFile(path.join(__dirname, 'chat.html'));
 });
 
 app.listen(PORT, () => {
